@@ -21,4 +21,15 @@ describe("Inbox", () => {
     it("deploys a contract", () => {
       assert.ok(contract.options.address)
     })
+
+    it("has a default message",  async () => {
+       const message = await contract.methods.message().call()
+       assert.equal(message, "Hello Vlad")
+    })
+
+    it("can change the message",  async () => {
+       await contract.methods.setMessage("Bye").send({ from: accounts[0] })
+       const message = await contract.methods.message().call()
+       assert.equal(message, "Bye")
+    })
 })
